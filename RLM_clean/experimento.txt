@@ -1,0 +1,185 @@
+{
+  "timestamp": "2025-10-13T11:45:54",
+  "config": {
+    "__module__": "__main__",
+    "__firstlineno__": 2,
+    "device": "mps",
+    "dataset": "rlm",
+    "mode": "last",
+    "num_features": 16,
+    "num_layers": 1,
+    "seed_rules": 12140459,
+    "num_tokens": 2,
+    "beta": 2,
+    "train_size": 32768,
+    "batch_size": 128,
+    "accumulation": 1,
+    "test_size": 32768,
+    "seed_sample": 69700296,
+    "input_format": "long",
+    "whitening": 0,
+    "model": "transformer_mlm",
+    "depth": 1,
+    "embedding_dim": 512,
+    "num_heads": 8,
+    "ffwd_size": 4,
+    "dropout": 0,
+    "seed_model": 73200308,
+    "optim": "adam",
+    "lr": 0.001,
+    "momentum": 0.0,
+    "scheduler": "cosine-warmup",
+    "warmup_time": 8,
+    "decay_time": 262144,
+    "max_epochs": 16,
+    "print_freq": 32768,
+    "save_freq": 2,
+    "measure_train": false,
+    "loss_threshold": 0.001,
+    "__static_attributes__": [],
+    "__dict__": "<attribute '__dict__' of 'config' objects>",
+    "__weakref__": "<attribute '__weakref__' of 'config' objects>",
+    "__doc__": "config()",
+    "__dataclass_params__": "_DataclassParams(init=True,repr=True,eq=True,order=False,unsafe_hash=False,frozen=False,match_args=True,kw_only=False,slots=False,weakref_slot=False)",
+    "__dataclass_fields__": {},
+    "__replace__": {},
+    "__hash__": null,
+    "__init__": {},
+    "__repr__": {
+      "__wrapped__": {}
+    },
+    "__eq__": {},
+    "__match_args__": [],
+    "input_size": 2,
+    "num_batches": 256,
+    "max_iters": 4096,
+    "outname": "test"
+  },
+  "dynamics": [
+    {
+      "t": 0,
+      "testloss": 2.8696059957146645,
+      "testacc": 0.073089599609375
+    },
+    {
+      "t": 1,
+      "testloss": 2.8696059957146645,
+      "testacc": 0.073089599609375
+    },
+    {
+      "t": 2,
+      "testloss": 2.8419631123542786,
+      "testacc": 0.12384033203125
+    },
+    {
+      "t": 3,
+      "testloss": 2.7973269298672676,
+      "testacc": 0.094024658203125
+    },
+    {
+      "t": 4,
+      "testloss": 2.746412567794323,
+      "testacc": 0.09259033203125
+    },
+    {
+      "t": 6,
+      "testloss": 2.6839815378189087,
+      "testacc": 0.13714599609375
+    },
+    {
+      "t": 8,
+      "testloss": 2.727753557264805,
+      "testacc": 0.1387939453125
+    },
+    {
+      "t": 11,
+      "testloss": 2.7027404382824898,
+      "testacc": 0.1387939453125
+    },
+    {
+      "t": 16,
+      "testloss": 2.5071496814489365,
+      "testacc": 0.27655029296875
+    },
+    {
+      "t": 23,
+      "testloss": 2.263911508023739,
+      "testacc": 0.3211669921875
+    },
+    {
+      "t": 32,
+      "testloss": 2.115704983472824,
+      "testacc": 0.35107421875
+    },
+    {
+      "t": 45,
+      "testloss": 2.0049512535333633,
+      "testacc": 0.36944580078125
+    },
+    {
+      "t": 64,
+      "testloss": 1.9687465727329254,
+      "testacc": 0.33929443359375
+    },
+    {
+      "t": 91,
+      "testloss": 1.9405122995376587,
+      "testacc": 0.356964111328125
+    },
+    {
+      "t": 128,
+      "testloss": 1.9338508248329163,
+      "testacc": 0.357757568359375
+    },
+    {
+      "t": 181,
+      "testloss": 1.9487119689583778,
+      "testacc": 0.3485107421875
+    },
+    {
+      "t": 256,
+      "testloss": 1.9422912374138832,
+      "testacc": 0.35882568359375
+    },
+    {
+      "t": 362,
+      "testloss": 1.9461455903947353,
+      "testacc": 0.33209228515625
+    },
+    {
+      "t": 512,
+      "testloss": 1.916579321026802,
+      "testacc": 0.356536865234375
+    },
+    {
+      "t": 724,
+      "testloss": 1.907258465886116,
+      "testacc": 0.363067626953125
+    },
+    {
+      "t": 1024,
+      "testloss": 1.9158690385520458,
+      "testacc": 0.36846923828125
+    },
+    {
+      "t": 1448,
+      "testloss": 1.907091185450554,
+      "testacc": 0.364044189453125
+    },
+    {
+      "t": 2048,
+      "testloss": 1.8989005498588085,
+      "testacc": 0.37017822265625
+    },
+    {
+      "t": 2896,
+      "testloss": 1.90575285628438,
+      "testacc": 0.36407470703125
+    },
+    {
+      "t": 4096,
+      "testloss": 1.910778395831585,
+      "testacc": 0.35076904296875
+    }
+  ]
+}
