@@ -91,4 +91,17 @@ def conditional_entropy(M: torch.Tensor,V, num_data,prior=None,device=None, gene
     return entropy(Pxy) - entropy(Px)
 
 
+def marginal(M: torch.Tensor,V,num_data,prior=None,device=None, generator=None):
+    if prior is None:
+        prior = torch.full((V,), 1.0 / V, dtype=M.dtype)
+    else:
+        p0 = prior.to(device=device, dtype=M.dtype)
+        p0 = p0 / p0.sum()
+        prior = torch.multinomial(p0, num_data, replacement=True, generator=generator)
+    prior = prior / prior.sum()
+    marg = torch.sum(joint_children(M,prior))
+
+    marg = entropy(joint_children(M,prior))
+
+    return torch.sum(marg, dim=1)
 
