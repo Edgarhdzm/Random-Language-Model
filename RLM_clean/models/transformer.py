@@ -32,16 +32,16 @@ class MultiHeadAttention(nn.Module):
         self.decoder = decoder
 
         self.key=nn.Parameter(
-            torch.randn( self.out_dim, self.input_dim)
+            35.001 * torch.randn( self.out_dim, self.input_dim)
         )
         self.query=nn.Parameter(
-            torch.randn( self.out_dim, self.input_dim)
+            35.001*torch.randn( self.out_dim, self.input_dim)
         )
         self.value=nn.Parameter(
-            torch.randn( self.out_dim, self.input_dim)
+            35.001*torch.randn( self.out_dim, self.input_dim)
         )
         self.projection=nn.Parameter(
-            torch.randn( self.out_dim, self.out_dim)
+            35.001*torch.randn( self.out_dim, self.out_dim)
         )
         if decoder:
             self.register_buffer('tril', torch.tril(torch.ones(self.input_size, self.input_size)))
@@ -60,17 +60,22 @@ class MultiHeadAttention(nn.Module):
             of size (batch_size, input_size, output_dim)
         """
         B,T,C = x.size()
-        k = F.linear( x, self.key, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2) * C**-.5    # [bs, num_heads, seq_len, head_dim]
-        q = F.linear( x, self.query, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2) * C**-.5  # [bs, num_heads, seq_len, head_dim]
-        v = F.linear( x, self.value, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2) * C**-.5  # [bs, num_heads, seq_len, head_dim]
+        #k = F.linear( x, self.key, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2) * C**-.5    # [bs, num_heads, seq_len, head_dim]
+        #q = F.linear( x, self.query, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2) * C**-.5  # [bs, num_heads, seq_len, head_dim]
+        #v = F.linear( x, self.value, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2) * C**-.5  # [bs, num_heads, seq_len, head_dim]
 
-        weight = q @ k.transpose(-2,-1) * self.head_dim**-.5             # [bs, num_heads, seq_len, seq_len]
+        k = F.linear(x, self.key, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2)  # Elimina * C**-.5
+        q = F.linear(x, self.query, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2)  # Elimina * C**-.5
+        v = F.linear(x, self.value, bias=None).view(B, T, self.num_heads, self.head_dim).transpose(1,2)  # Elimina * C**-.5
+        #weight = q @ k.transpose(-2,-1) * self.head_dim**-.5             # [bs, num_heads, seq_len, seq_len]
+        weight = q @ k.transpose(-2,-1)
         weight = weight.masked_fill(self.tril[:T,:T]==0, float('-inf'))  #  //
         weight = F.softmax(weight, dim=-1)                               #  //
         weight = self.dropout(weight)
 
         out = (weight @ v).transpose(1,2).reshape(B,T,-1) # [bs, seq_len, out_dim]
-        out = F.linear( out, self.projection, bias=None) * self.projection.size(-1)**-.5
+        #out = F.linear( out, self.projection, bias=None) * self.projection.size(-1)**-.5
+        out = F.linear( out, self.projection, bias=None)
 
         return out
 
@@ -187,11 +192,11 @@ class MLA(nn.Module):
             Output of multilayer self-attention, tensor of size (batch_size, seq_len, vocab_size)
         """
         B,T,C = x.size()
-        token_emb = F.linear( x, self.token_embedding, bias=None) *C**-.5   # [bs, seq_len, embedding_dim]
+        token_emb = F.linear( x, self.token_embedding, bias=None) #*C**-.5   # [bs, seq_len, embedding_dim]
         pos_emb = self.position_embedding(torch.arange(T, device=x.device)) # [seq_len, embedding_dim]
         x = token_emb + pos_emb # [bs, seq_len, embedding_dim]
         x = self.blocks(x)
-        logits = F.linear( x[:,-1,:], self.readout, bias=None) * self.readout.size(-1)**-.5
+        logits = F.linear( x[:,-1,:], self.readout, bias=None) #* self.readout.size(-1)**-.5
 
         return logits
 

@@ -24,10 +24,11 @@ import matplotlib.pyplot as plt
 
 def run( config):
 
-    config.num_data = config.train_size + config.test_size
     config.input_size = 2**config.num_layers
-    config.num_batches = config.train_size//config.batch_size
-    config.max_iters = config.max_epochs*config.num_batches
+    #config.num_batches = config.train_size//config.batch_size
+    #config.max_iters = config.max_epochs*config.num_batches
+    config.train_size = (config.max_iters*config.batch_size)//config.max_epochs
+    config.num_data = config.train_size + config.test_size
 
     print(config.device)
 

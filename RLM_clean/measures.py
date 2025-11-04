@@ -45,7 +45,7 @@ def joint_children(M: torch.Tensor, prior) -> torch.Tensor:
     if not torch.is_tensor(prior):
         prior = torch.tensor(prior, dtype=M.dtype, device=M.device)
     prior = prior / prior.sum()
-    Pxy = torch.einsum('n,nab->ab', prior, M)
+    Pxy = torch.einsum('n,nab->ab', prior, M) #Get the probability multiplied by the prior, afterwards it is normalize.
     Pxy = Pxy / Pxy.sum()
     return Pxy
 
@@ -91,7 +91,7 @@ def conditional_entropy(M: torch.Tensor,V, num_data,prior=None,device=None, gene
     return entropy(Pxy) - entropy(Px)
 
 
-def marginal(M: torch.Tensor,V,num_data,prior=None,device=None, generator=None):
+def marginal(M: torch.Tensor,V,num_data,prior=None,device=None,generator=None):
     if prior is None:
         prior = torch.full((V,), 1.0 / V, dtype=M.dtype)
     else:
@@ -99,9 +99,7 @@ def marginal(M: torch.Tensor,V,num_data,prior=None,device=None, generator=None):
         p0 = p0 / p0.sum()
         prior = torch.multinomial(p0, num_data, replacement=True, generator=generator)
     prior = prior / prior.sum()
-    marg = torch.sum(joint_children(M,prior))
+    marg = torch.sum(joint_children(M,prior), dim=1)
 
-    marg = entropy(joint_children(M,prior))
-
-    return torch.sum(marg, dim=1)
+    return entropy(marg)
 
