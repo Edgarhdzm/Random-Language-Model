@@ -8,8 +8,8 @@ def rlm_make_M(V, beta, seed, device=None, generator=None, dtype=torch.float32):
     #It is expecting the vocabulary size and the Beta to generate this matrix. 
     random.seed(seed)
     device = device or torch.device('cpu') #Select the device 
-    #S = torch.randn((V, V, V), generator=generator, device=device, dtype=dtype) * math.sqrt(math.log(V))
-    S = torch.randn((V, V, V), generator=generator, device=device, dtype=dtype)
+    S = torch.randn((V, V, V), generator=generator, device=device, dtype=dtype) * math.sqrt(math.log(V))
+    #S = torch.randn((V, V, V), generator=generator, device=device, dtype=dtype)
     S = S * beta
     return torch.softmax(S.view(V, -1), dim=1).view(V, V, V)
 

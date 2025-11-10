@@ -103,7 +103,7 @@ def init_data( inputs, targets, args):
     if args.mode=='class':
         assert targets is not None, "classification mode requires target labels (tensor of ints, size (B))"
         # TODO: append classification token for transformers
-    elif args.mode=='last':
+    elif args.mode=='last': #Is the class we are inputting. 
         targets = torch.clone(inputs[:,-1])
     elif args.mode=='auto':
         assert args.input_format=='long', "autoregressive mode requires long input format"
@@ -119,7 +119,7 @@ def init_data( inputs, targets, args):
 
     if args.test_size:
         testset = torch.utils.data.TensorDataset(inputs[args.train_size:], targets[args.train_size:])
-        test_loader = torch.utils.data.DataLoader(testset, batch_size=1024, shuffle=False, num_workers=0)
+        test_loader = torch.utils.data.DataLoader(testset, batch_size=args.batch_size, shuffle=False, num_workers=0)
     else:
         test_loader = None
 
